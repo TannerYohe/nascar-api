@@ -14,6 +14,7 @@ import logging
 
 log = logging.getLogger(__name__)
 
+
 class HistoricNascarRepo(NascarRepo):
     DOMAIN = f"{super().DOMAIN}/cacher"
 

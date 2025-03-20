@@ -1,5 +1,6 @@
 from enum import IntEnum
 
+
 class Flag(IntEnum):
     GREEN = 1
     YELLOW = 2
