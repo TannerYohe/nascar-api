@@ -2,9 +2,9 @@ from pydantic import BaseModel, Field, BeforeValidator
 from .base_race_info import BaseRaceInfo
 from .pit_data import BasePitData
 from typing import Optional, List
-from enums import Flag
+from nascar_api.enums import Flag
 from typing_extensions import Annotated
-from util import optional_str_to_int
+from .util import optional_str_to_int
 
 
 class WeekendRaceInfo(BaseRaceInfo):

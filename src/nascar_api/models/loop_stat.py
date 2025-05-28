@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from enums import Series
+from nascar_api.enums import Series
 from typing import List
 
 

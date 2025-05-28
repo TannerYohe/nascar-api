@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=75.8"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=2.0.0, <3.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [project]
 name = "nascar-api"
@@ -10,16 +10,57 @@ authors = [
 ]
 description = "Package containing tools to read and manipulate NASCAR data via the CF API."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11, <4.0"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-dependencies = [
-
-]
 license = {text = "GPL-3.0-or-later"}
+dependencies = [
+    "pydantic (>=2.11.4,<3.0.0)",
+    "requests (>=2.32.3,<3.0.0)",
+    "tenacity (>=9.1.2,<10.0.0)",
+    "pytest-cov (>=6.1.1,<7.0.0)",
+    "mypy (>=1.15.0,<2.0.0)",
+    "ruff (>=0.11.10,<0.12.0)",
+    "requests-mock (>=1.12.1,<2.0.0)",
+    "polyfactory (>=2.21.0,<3.0.0)",
+    "types-requests (>=2.32.0.20250515,<3.0.0.0)"
+]
 
 [project.urls]
 Homepage = "https://github.com/TannerYohe/nascar-api"
 Issues = "https://github.com/TannerYohe/nascar-api/issues"
+
+[tool.ruff]
+exlcude = [".git", "__pycache__", "build", "dist", "site-packages"]
+line-length = 88
+indent-width = 4
+target-version = ["py313"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "C", "D", "W"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.pytest.ini_options]
+log_cli_level = "DEBUG"
+log_cli = true
+log_cli_format = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+log_cli_date_format = "%H:%M:%S"
+addopts = [
+    "--cov=nascar_api",
+    "--cov-report=html"
+]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+show_error_codes = true
+
+mypy_path = ["nsacar_api"]
+namespace_packages = true
+explicit_package_bases = true

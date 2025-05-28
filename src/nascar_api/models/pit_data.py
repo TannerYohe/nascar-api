@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from enums import Flag
+from nascar_api.enums import Flag
 from typing import Optional
 
 

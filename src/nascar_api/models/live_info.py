@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List
-from enums import Flag, Series
+from nascar_api.enums import Flag, Series
 from datetime import datetime
 
 

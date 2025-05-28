@@ -1,5 +1,5 @@
 from pydantic import ValidationError
-from ..models import (
+from nascar_api.models import (
     LapData,
     RaceLaps,
     PitData,
@@ -7,31 +7,35 @@ from ..models import (
     RaceInfo,
     WeekendInfo,
 )
-from base import NascarRepo
+from .base import NascarRepo
 from typing import List
-from .. import Series
+from nascar_api.enums import Series
 import logging
 
 log = logging.getLogger(__name__)
 
 class HistoricNascarRepo(NascarRepo):
-    DOMAIN = f"{super().DOMAIN}/cacher"
+    DOMAIN = f"{NascarRepo.DOMAIN}/cacher"
 
     def get_races(self, year: int, series: Series = None) -> List[RaceInfo]:
+
+        def validate_race(json_data):
+            try:
+                return RaceInfo.model_validate(json_data)
+            except ValidationError:
+                log.error(f"Invalid race object: {race}")
+                raise
+
         url = f"{self.DOMAIN}/{year}/race_list_basic.json"
         response_json = self.safe_get(url)
         races = []
         if series:
             for race in response_json[f"series_{series.value}"]:
-                try:
-                    races.append(RaceInfo.model_validate(race))
-                except ValidationError:
-                    print(race)
-                    raise
+                races.append(validate_race(race))
         if not series:
             for series in response_json:
                 for race in response_json[series]:
-                    races.append(RaceInfo.model_validate(race))
+                    races.append(validate_race(race))
         return races
 
     def get_lap_notes(self, year: int, series: Series, race_id: int) -> List[LapData]:
@@ -47,7 +51,7 @@ class HistoricNascarRepo(NascarRepo):
                         flag_state=flag_data.get("FlagState"),
                         note=flag_data.get("Note"),
                         note_id=flag_data.get("NoteID"),
-                        driver_ids=filter(None, flag_data.get("DriverIDs")),
+                        driver_ids=list(filter(None, flag_data.get("DriverIDs"))),
                     )
                 )
         return laps

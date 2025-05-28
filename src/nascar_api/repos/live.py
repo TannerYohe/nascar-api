@@ -1,15 +1,15 @@
 from typing import List
-from models import (
+from nascar_api.models import (
     FlagData,
     PointsData,
     LiveInfo,
 )
-from enums import Series
-from base import NascarRepo
+from nascar_api.enums import Series
+from .base import NascarRepo
 
 
 class LiveNascarFeedRepo(NascarRepo):
-    DOMAIN = f"{super().DOMAIN}/live/feeds"
+    DOMAIN = f"{NascarRepo.DOMAIN}/live/feeds"
 
     def get_live_flags(self) -> List[FlagData]:
         url = f"{self.DOMAIN}/live-flag-data.json"

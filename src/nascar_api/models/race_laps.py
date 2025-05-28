@@ -1,13 +1,13 @@
 from pydantic import BaseModel, Field, BeforeValidator
 from typing import List, Optional
 from typing_extensions import Annotated
-from util import optional_str_to_int
+from .util import optional_str_to_float
 
 
 class LapInfo(BaseModel):
     lap: int = Field(alias="Lap")
     lap_time: Optional[float] = Field(alias="LapTime")
-    lap_speed: Annotated[Optional[float], BeforeValidator(optional_str_to_int)] = Field(
+    lap_speed: Annotated[Optional[float], BeforeValidator(optional_str_to_float)] = Field(
         alias="LapSpeed"
     )
     running_pos: int = Field(alias="RunningPos")

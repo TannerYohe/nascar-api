@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from enums import Flag
+from nascar_api.enums import Flag
 from typing import List
 
 

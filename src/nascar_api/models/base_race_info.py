@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from datetime import datetime
-from enums import Series
+from nascar_api.enums import Series
 
 
 class Event(BaseModel):

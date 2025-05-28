@@ -2,7 +2,7 @@ from pydantic import BaseModel, BeforeValidator, Field
 from typing import List, Optional
 from typing_extensions import Annotated
 from datetime import datetime
-from util import optional_str_to_int
+from .util import optional_str_to_int
 
 
 class WeekendRunInfo(BaseModel):
