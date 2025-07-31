@@ -1,6 +1,8 @@
-from pydantic import BaseModel
-from nascar_api.enums import Flag
 from typing import Optional
+
+from pydantic import BaseModel
+
+from nascar_api.enums import Flag
 
 
 class FlagData(BaseModel):

@@ -1,6 +1,8 @@
-from pydantic import BaseModel, Field, BeforeValidator
 from typing import List, Optional
+
+from pydantic import BaseModel, BeforeValidator, Field
 from typing_extensions import Annotated
+
 from .util import optional_str_to_float
 
 

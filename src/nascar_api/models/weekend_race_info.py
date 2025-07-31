@@ -1,9 +1,12 @@
-from pydantic import BaseModel, Field, BeforeValidator
+from typing import List, Optional
+
+from pydantic import BaseModel, BeforeValidator, Field
+from typing_extensions import Annotated
+
+from nascar_api.enums import Flag
+
 from .base_race_info import BaseRaceInfo
 from .pit_data import BasePitData
-from typing import Optional, List
-from nascar_api.enums import Flag
-from typing_extensions import Annotated
 from .util import optional_str_to_int
 
 

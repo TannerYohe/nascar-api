@@ -1,6 +1,8 @@
-from pydantic import BaseModel
-from nascar_api.enums import Series
 from typing import List
+
+from pydantic import BaseModel
+
+from nascar_api.enums import Series
 
 
 class DriverLoopStat(BaseModel):

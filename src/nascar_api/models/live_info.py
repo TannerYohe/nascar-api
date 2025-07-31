@@ -1,7 +1,9 @@
-from pydantic import BaseModel
-from typing import List
-from nascar_api.enums import Flag, Series
 from datetime import datetime
+from typing import List
+
+from pydantic import BaseModel
+
+from nascar_api.enums import Flag, Series
 
 
 class LiveVehicleInfo(BaseModel):

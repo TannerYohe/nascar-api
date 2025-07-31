@@ -1,10 +1,12 @@
 from typing import List
+
+from nascar_api.enums import Series
 from nascar_api.models import (
     FlagData,
-    PointsData,
     LiveInfo,
+    PointsData,
 )
-from nascar_api.enums import Series
+
 from .base import NascarRepo
 
 

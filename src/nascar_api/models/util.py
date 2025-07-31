@@ -1,8 +1,8 @@
-import re
-
-from nascar_api.enums import Series, Flag
-from typing import Optional
 import locale
+import re
+from typing import Optional
+
+from nascar_api.enums import Flag, Series
 
 
 def get_series_str(series: Series) -> str:
@@ -44,7 +44,9 @@ def optional_str_to_int(input_value: Optional[str]) -> Optional[int]:
         if input_value.isdigit():
             return int(input_value)
         elif "," in input_value:
-            return int(comma_str_to_float(input_value))
+            flt = comma_str_to_float(input_value)
+            if flt is not None:
+                return int(flt)
         else:
             match = re.findall(r"\d+", input_value)
             if match:
@@ -61,12 +63,16 @@ def optional_str_to_float(input_value: Optional[str]) -> Optional[float]:
             return float(input_value)
     return None
 
-def bad_int_to_series(int_value: int) -> Optional[int]:
+def bad_int_to_series(int_value: Optional[int]) -> Optional[int]:
+    if int_value is None:
+        return None
     if 0 < int_value < 4:
         return int_value
     return None
 
 
 def comma_str_to_float(input_value: Optional[str]) -> Optional[float]:
+    if not input_value:
+        return None
     locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
     return locale.atof(input_value)

@@ -1,29 +1,32 @@
+import logging
+from typing import Any, Dict, List, Optional
+
 from pydantic import ValidationError
+
+from nascar_api.enums import Series
 from nascar_api.models import (
     LapData,
-    RaceLaps,
     PitData,
-    RaceLoopStat,
     RaceInfo,
+    RaceLaps,
+    RaceLoopStat,
     WeekendInfo,
 )
+
 from .base import NascarRepo
-from typing import List
-from nascar_api.enums import Series
-import logging
 
 log = logging.getLogger(__name__)
 
 class HistoricNascarRepo(NascarRepo):
     DOMAIN = f"{NascarRepo.DOMAIN}/cacher"
 
-    def get_races(self, year: int, series: Series = None) -> List[RaceInfo]:
+    def get_races(self, year: int, series: Optional[Series] = None) -> List[RaceInfo]:
 
-        def validate_race(json_data):
+        def validate_race(json_data: Dict[Any, Any]) -> RaceInfo:
             try:
                 return RaceInfo.model_validate(json_data)
             except ValidationError:
-                log.error(f"Invalid race object: {race}")
+                log.error(f"Invalid race object: {json_data}")
                 raise
 
         url = f"{self.DOMAIN}/{year}/race_list_basic.json"

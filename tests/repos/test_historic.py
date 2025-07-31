@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 from nascar_api.enums import Series
-from nascar_api.models import RaceInfo, RaceLaps, PitData, WeekendInfo, RaceLoopStat
+from nascar_api.models import PitData, RaceInfo, RaceLaps, RaceLoopStat, WeekendInfo
 from nascar_api.repos import HistoricNascarRepo
 from nascar_api.repos.base import NascarRepo
 from tests.data_factories.loop_stat import RaceLoopStatFactory

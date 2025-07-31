@@ -1,14 +1,13 @@
 from pytest import raises
 
+from nascar_api.enums import Flag, Series
 from nascar_api.models.util import (
-    get_series_str,
+    bad_int_to_series,
     get_flag_str,
-    optional_str_to_int,
+    get_series_str,
     optional_str_to_float,
-    bad_int_to_series
+    optional_str_to_int,
 )
-
-from nascar_api.enums import Series, Flag
 
 
 def test_series_str():

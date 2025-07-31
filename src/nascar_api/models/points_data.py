@@ -1,8 +1,11 @@
-from pydantic import BaseModel, BeforeValidator
 from typing import Optional
-from nascar_api.enums import Series
+
+from pydantic import BaseModel, BeforeValidator
 from typing_extensions import Annotated
-from .util import optional_str_to_int, bad_int_to_series
+
+from nascar_api.enums import Series
+
+from .util import bad_int_to_series, optional_str_to_int
 
 
 class PointsData(BaseModel):

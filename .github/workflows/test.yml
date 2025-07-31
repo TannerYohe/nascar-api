@@ -28,9 +28,9 @@ jobs:
           poetry install
       - name: Ruff
         uses: astral-sh/ruff-action@v3.2.2
-      - name: mypy
+      - name: Type checking
         run: |
-          mypy src
+          poetry run ty check src
       - name: Run tests
         run: |
-          pytest --cov-fail-under=90 tests
+          poetry run pytest --cov-fail-under=90 tests

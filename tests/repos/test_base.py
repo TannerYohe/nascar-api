@@ -1,6 +1,6 @@
-from pytest import raises
 from json import JSONDecodeError
 
+from pytest import raises
 from requests.exceptions import HTTPError
 
 from nascar_api.repos.base import NascarRepo
