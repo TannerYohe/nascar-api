@@ -1,3 +1,9 @@
+"""Utility functions for NASCAR API models.
+
+This module provides utility functions for data conversion and validation
+used by the NASCAR API models.
+"""
+
 import locale
 import re
 from typing import Optional
@@ -7,15 +13,16 @@ from nascar_api.enums import Flag, Series
 
 def get_series_str(series: Series) -> str:
     """Convert a Series enum to its human-readable string representation.
-    
+
     Args:
         series: The Series enum value to convert.
-    
+
     Returns:
         Human-readable string representation of the series.
-        
+
     Raises:
         ValueError: If the series enum value is not recognized.
+
     """
     match series:
         case Series.CUP:
@@ -30,15 +37,16 @@ def get_series_str(series: Series) -> str:
 
 def get_flag_str(flag: Flag) -> str:
     """Convert a Flag enum to its human-readable string representation.
-    
+
     Args:
         flag: The Flag enum value to convert.
-    
+
     Returns:
         Human-readable string representation of the flag.
-        
+
     Raises:
         ValueError: If the flag enum value is not recognized.
+
     """
     match flag:
         case Flag.GREEN:
@@ -61,17 +69,17 @@ def get_flag_str(flag: Flag) -> str:
 
 def optional_str_to_int(input_value: Optional[str]) -> Optional[int]:
     """Convert an optional string to an integer, handling various formats.
-    
+
     This function attempts to extract integer values from strings that may contain
     commas, decimal points, or other non-numeric characters. It will extract the
     first sequence of digits found in the string.
-    
+
     Args:
         input_value: The string to convert, or None.
-    
+
     Returns:
         The extracted integer value, or None if no valid integer could be found.
-        
+
     Examples:
         >>> optional_str_to_int("123")
         123
@@ -81,6 +89,7 @@ def optional_str_to_int(input_value: Optional[str]) -> Optional[int]:
         123
         >>> optional_str_to_int(None)
         None
+
     """
     if input_value:
         if isinstance(input_value, int):
@@ -99,16 +108,16 @@ def optional_str_to_int(input_value: Optional[str]) -> Optional[int]:
 
 def optional_str_to_float(input_value: Optional[str]) -> Optional[float]:
     """Convert an optional string to a float, handling comma-separated numbers.
-    
+
     This function handles strings that may contain comma-separated numbers
     (e.g., "1,234.56") and converts them to float values.
-    
+
     Args:
         input_value: The string to convert, or None.
-    
+
     Returns:
         The converted float value, or None if the input is empty or invalid.
-        
+
     Examples:
         >>> optional_str_to_float("123.45")
         123.45
@@ -116,6 +125,7 @@ def optional_str_to_float(input_value: Optional[str]) -> Optional[float]:
         1234.56
         >>> optional_str_to_float(None)
         None
+
     """
     if input_value:
         if isinstance(input_value, float):
@@ -128,16 +138,16 @@ def optional_str_to_float(input_value: Optional[str]) -> Optional[float]:
 
 def bad_int_to_series(int_value: Optional[int]) -> Optional[int]:
     """Convert an integer to a series ID if it's within the valid range.
-    
+
     This function validates that an integer represents a valid series ID.
     Valid series IDs are 1, 2, and 3 (corresponding to Cup, Xfinity, and Truck series).
-    
+
     Args:
         int_value: The integer to validate, or None.
-    
+
     Returns:
         The validated series ID if valid, or None if invalid or None.
-        
+
     Examples:
         >>> bad_int_to_series(1)
         1
@@ -145,6 +155,7 @@ def bad_int_to_series(int_value: Optional[int]) -> Optional[int]:
         None
         >>> bad_int_to_series(None)
         None
+
     """
     if int_value is None:
         return None
@@ -155,16 +166,16 @@ def bad_int_to_series(int_value: Optional[int]) -> Optional[int]:
 
 def comma_str_to_float(input_value: Optional[str]) -> Optional[float]:
     """Convert a comma-separated string to a float using locale-aware parsing.
-    
+
     This function uses the locale module to properly parse numbers that contain
     commas as thousand separators (e.g., "1,234.56").
-    
+
     Args:
         input_value: The comma-separated string to convert, or None.
-    
+
     Returns:
         The parsed float value, or None if the input is empty or invalid.
-        
+
     Examples:
         >>> comma_str_to_float("1,234.56")
         1234.56
@@ -172,6 +183,7 @@ def comma_str_to_float(input_value: Optional[str]) -> Optional[float]:
         1000.0
         >>> comma_str_to_float(None)
         None
+
     """
     if not input_value:
         return None

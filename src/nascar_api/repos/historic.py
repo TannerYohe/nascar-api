@@ -1,3 +1,9 @@
+"""Historic repository module for NASCAR API operations.
+
+This module provides the historic repository class that handles requests
+for historical race data from the NASCAR API.
+"""
+
 import logging
 from typing import Any, Dict, List, Optional
 
@@ -19,25 +25,28 @@ log = logging.getLogger(__name__)
 
 class HistoricNascarRepo(NascarRepo):
     """Repository for accessing historical NASCAR race data.
-    
+
     Provides methods to retrieve historical race information, lap times,
     pit data, and other race-related data from the NASCAR API.
     """
-    
+
     DOMAIN = f"{NascarRepo.DOMAIN}/cacher"
 
-    def get_races(self, year: int, series: Optional[Series] = None) -> List[RaceInfo]:
+    def get_races(
+        self, year: int, series: Optional[Series] = None
+    ) -> List[RaceInfo]:
         """Retrieve race information for a specific year and optionally a specific series.
-        
+
         Args:
             year: The year to retrieve races for.
             series: Optional series filter. If None, returns races for all series.
-        
+
         Returns:
             List of RaceInfo objects containing race details.
-            
+
         Raises:
             ValidationError: If the API response contains invalid race data.
+
         """
 
         def validate_race(json_data: Dict[Any, Any]) -> RaceInfo:
@@ -61,14 +70,15 @@ class HistoricNascarRepo(NascarRepo):
 
     def get_lap_notes(self, year: int, series: Series, race_id: int) -> List[LapData]:
         """Retrieve lap notes and flag data for a specific race.
-        
+
         Args:
             year: The year of the race.
             series: The series the race belongs to.
             race_id: The unique identifier for the race.
-        
+
         Returns:
             List of LapData objects containing lap notes and flag information.
+
         """
         url = f"{self.DOMAIN}/{year}/{series.value}/{race_id}/lap-notes.json"
         response_json = self.safe_get(url)
@@ -89,17 +99,18 @@ class HistoricNascarRepo(NascarRepo):
 
     def get_lap_times(self, year: int, series: Series, race_id: int) -> List[RaceLaps]:
         """Retrieve lap times for a specific race.
-        
+
         Args:
             year: The year of the race.
             series: The series the race belongs to.
             race_id: The unique identifier for the race.
-        
+
         Returns:
             List of RaceLaps objects containing lap time data.
-            
+
         Raises:
             ValidationError: If the API response contains invalid lap time data.
+
         """
         url = f"{self.DOMAIN}/{year}/{series.value}/{race_id}/lap-times.json"
         response_json = self.safe_get(url)
@@ -111,16 +122,17 @@ class HistoricNascarRepo(NascarRepo):
 
     def get_pit_data(self, series: Series, race_id: int) -> List[PitData]:
         """Retrieve pit stop data for a specific race.
-        
+
         Args:
             series: The series the race belongs to.
             race_id: The unique identifier for the race.
-        
+
         Returns:
             List of PitData objects containing pit stop information.
-            
+
         Raises:
             ValidationError: If the API response contains invalid pit data.
+
         """
         url = f"{self.DOMAIN}/live/series_{series.value}/{race_id}/live-pit-data.json"
         response_json = self.safe_get(url)
@@ -130,41 +142,47 @@ class HistoricNascarRepo(NascarRepo):
             pits.append(PitData.model_validate(data))
         return pits
 
-    def get_weekend_data(self, year: int, series: Series, race_id: int) -> WeekendInfo:
+    def get_weekend_data(
+        self, year: int, series: Series, race_id: int
+    ) -> WeekendInfo:
         """Retrieve comprehensive weekend information for a specific race.
-        
+
         Args:
             year: The year of the race.
             series: The series the race belongs to.
             race_id: The unique identifier for the race.
-        
+
         Returns:
             WeekendInfo object containing comprehensive weekend data.
-            
+
         Raises:
             ValidationError: If the API response contains invalid weekend data.
+
         """
         url = f"{self.DOMAIN}/{year}/{series.value}/{race_id}/weekend-feed.json"
         response_json = self.safe_get(url)
         response_json.update({"race_id": race_id})
         return WeekendInfo.model_validate(response_json)
 
-    def get_loopstats(self, year: int, series: Series, race_id: int) -> RaceLoopStat:
+    def get_loopstats(
+        self, year: int, series: Series, race_id: int
+    ) -> RaceLoopStat:
         """Retrieve loop statistics for a specific race.
-        
+
         Loop statistics include driver performance metrics such as average speed,
         fastest lap, and other race analytics.
-        
+
         Args:
             year: The year of the race.
             series: The series the race belongs to.
             race_id: The unique identifier for the race.
-        
+
         Returns:
             RaceLoopStat object containing loop statistics.
-            
+
         Raises:
             ValidationError: If the API response contains invalid loop statistics data.
+
         """
         url = f"{super().DOMAIN}/loopstats/prod/{year}/{series.value}/{race_id}.json"
         response_json = self.safe_get(url)
