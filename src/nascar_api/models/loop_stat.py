@@ -1,9 +1,23 @@
-from pydantic import BaseModel
-from enums import Series
+"""Loop statistics models for NASCAR API race data.
+
+This module contains models for loop statistics which provide
+detailed performance metrics for drivers during races.
+"""
+
 from typing import List
+
+from pydantic import BaseModel
+
+from nascar_api.enums import Series
 
 
 class DriverLoopStat(BaseModel):
+    """Represents loop statistics for a specific driver.
+
+    Contains comprehensive performance metrics including
+    position changes, passing statistics, and race ratings.
+    """
+
     driver_id: int
     start_ps: int
     mid_ps: int
@@ -25,6 +39,12 @@ class DriverLoopStat(BaseModel):
 
 
 class RaceLoopStat(BaseModel):
+    """Represents loop statistics for an entire race.
+
+    Contains race-level statistics and driver performance
+    data for all participants.
+    """
+
     race_id: int
     race_name: str
     series_id: Series

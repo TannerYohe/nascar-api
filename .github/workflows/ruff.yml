@@ -1,7 +1,0 @@
-name: ruff-action
-on:
-  pull_request:
-jobs:
-  ruff:
-    name: ruff check
-    uses: astral-sh/ruff-action@v3.2.2

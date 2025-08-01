@@ -1,11 +1,26 @@
-from pydantic import BaseModel, BeforeValidator
+"""Points data models for NASCAR API race information.
+
+This module contains models for driver points and standings data,
+including championship points, stage points, and driver statistics.
+"""
+
 from typing import Optional
-from enums import Series
+
+from pydantic import BaseModel, BeforeValidator
 from typing_extensions import Annotated
-from util import optional_str_to_int, bad_int_to_series
+
+from nascar_api.enums import Series
+
+from .util import bad_int_to_series, optional_str_to_int
 
 
 class PointsData(BaseModel):
+    """Represents driver points and standings information.
+
+    Contains comprehensive data about driver performance including
+    championship points, stage points, wins, and other statistics.
+    """
+
     bonus_points: int
     car_number: Annotated[Optional[int], BeforeValidator(optional_str_to_int)]
     delta_leader: int

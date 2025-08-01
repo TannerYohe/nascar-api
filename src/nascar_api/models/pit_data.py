@@ -1,9 +1,23 @@
-from pydantic import BaseModel, Field
-from enums import Flag
+"""Pit data models for NASCAR API race information.
+
+This module contains models for pit stop data including
+timing information, tire changes, and pit stop performance metrics.
+"""
+
 from typing import Optional
+
+from pydantic import BaseModel, Field
+
+from nascar_api.enums import Flag
 
 
 class BasePitData(BaseModel):
+    """Base model for pit stop data containing comprehensive pit information.
+
+    Contains detailed timing data, tire change information,
+    and pit stop performance metrics.
+    """
+
     vehicle_number: int
     driver_name: str
     vehicle_manufacturer: str
@@ -32,4 +46,9 @@ class BasePitData(BaseModel):
 
 
 class PitData(BasePitData):
+    """Extended pit data model with race identification.
+
+    Extends BasePitData to include race-specific information.
+    """
+
     race_id: int

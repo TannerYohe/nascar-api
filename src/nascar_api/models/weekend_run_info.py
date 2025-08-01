@@ -1,12 +1,32 @@
-from pydantic import BaseModel, BeforeValidator, Field
-from typing import List, Optional
-from typing_extensions import Annotated
+"""Weekend run information models for NASCAR API data structures.
+
+This module contains models for weekend run data including
+practice sessions, qualifying runs, and other timed events.
+"""
+
 from datetime import datetime
-from util import optional_str_to_int
+from typing import List, Optional
+
+from pydantic import BaseModel, BeforeValidator, Field
+from typing_extensions import Annotated
+
+from .util import optional_str_to_int
 
 
 class WeekendRunInfo(BaseModel):
+    """Represents weekend run information for timed events.
+
+    Contains data about practice sessions, qualifying runs,
+    and other timed events during a race weekend.
+    """
+
     class Result(BaseModel):
+        """Represents a driver's result in a specific run.
+
+        Contains driver performance data including lap times,
+        speeds, and finishing position for timed events.
+        """
+
         run_id: int
         car_number: Annotated[int, BeforeValidator(optional_str_to_int)]
         vehicle_number: Annotated[

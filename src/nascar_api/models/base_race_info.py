@@ -1,10 +1,25 @@
-from pydantic import BaseModel, Field
-from typing import List, Optional
+"""Base race information models for NASCAR API data structures.
+
+This module contains the foundational models for race information,
+including the Event and BaseRaceInfo classes that define the core
+data structures used throughout the NASCAR API.
+"""
+
 from datetime import datetime
-from enums import Series
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
+
+from nascar_api.enums import Series
 
 
 class Event(BaseModel):
+    """Represents a single event within a race weekend.
+
+    Contains information about a specific event such as practice,
+    qualifying, or race sessions.
+    """
+
     event_name: str
     notes: str
     start_time_utc: datetime
@@ -12,7 +27,19 @@ class Event(BaseModel):
 
 
 class BaseRaceInfo(BaseModel):
+    """Base model for race information containing comprehensive race details.
+
+    This model serves as the foundation for all race-related data,
+    including race metadata, statistics, and associated events.
+    """
+
     class Infraction(BaseModel):
+        """Represents a penalty or infraction during a race.
+
+        Contains details about rule violations, penalties assessed,
+        and the drivers involved.
+        """
+
         car_number: int
         driver_fullname: Optional[str] = Field(default=None)
         driver_id: Optional[int] = Field(default=None)
