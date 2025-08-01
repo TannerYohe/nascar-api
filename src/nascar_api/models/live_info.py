@@ -1,3 +1,9 @@
+"""Live race information models for NASCAR API data structures.
+
+This module contains models for real-time race data,
+including vehicle information, pit stops, and live race statistics.
+"""
+
 from datetime import datetime
 from typing import List
 
@@ -7,11 +13,28 @@ from nascar_api.enums import Flag, Series
 
 
 class LiveVehicleInfo(BaseModel):
+    """Represents live vehicle information during a race.
+
+    Contains real-time data about a specific vehicle including
+    performance metrics, pit stops, and race statistics.
+    """
+
     class LapInterval(BaseModel):
+        """Represents a lap interval for tracking specific periods.
+
+        Used for tracking laps led and other lap-based metrics.
+        """
+
         start_lap: int
         end_lap: int
 
     class Pitstop(BaseModel):
+        """Represents pit stop information for a vehicle.
+
+        Contains timing data, position changes, and pit stop
+        performance metrics.
+        """
+
         positions_gained_lossed: int
         pit_in_elapsed_time: float
         pit_in_lap_count: int
@@ -52,7 +75,18 @@ class LiveVehicleInfo(BaseModel):
 
 
 class LiveInfo(BaseModel):
+    """Represents live race information and statistics.
+
+    Contains comprehensive real-time data about the current race
+    including flag states, timing, and vehicle information.
+    """
+
     class Stage(BaseModel):
+        """Represents stage information for a race.
+
+        Contains stage number, finish lap, and stage duration.
+        """
+
         stage_num: int
         finish_at_lap: int
         laps_in_stage: int

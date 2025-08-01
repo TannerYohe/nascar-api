@@ -35,7 +35,7 @@ class HistoricNascarRepo(NascarRepo):
     def get_races(
         self, year: int, series: Optional[Series] = None
     ) -> List[RaceInfo]:
-        """Retrieve race information for a specific year and optionally a specific series.
+        """Retrieve race data for a specific year and optionally a specific series.
 
         Args:
             year: The year to retrieve races for.

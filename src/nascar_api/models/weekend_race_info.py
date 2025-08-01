@@ -1,3 +1,9 @@
+"""Weekend race information models for NASCAR API data structures.
+
+This module contains models for comprehensive weekend race data,
+including results, caution segments, race leaders, and pit reports.
+"""
+
 from typing import List, Optional
 
 from pydantic import BaseModel, BeforeValidator, Field
@@ -11,7 +17,19 @@ from .util import optional_str_to_int
 
 
 class WeekendRaceInfo(BaseRaceInfo):
+    """Extended race information model for weekend events.
+
+    Contains comprehensive race data including results, caution segments,
+    race leaders, stage results, and pit reports for weekend events.
+    """
+
     class CautionSegment(BaseModel):
+        """Represents a caution period during a race.
+
+        Contains information about caution flags, timing,
+        and any beneficiaries of the caution.
+        """
+
         race_id: int
         start_lap: int
         end_lap: int
@@ -23,13 +41,31 @@ class WeekendRaceInfo(BaseRaceInfo):
         flag_state: Flag
 
     class RaceLeader(BaseModel):
+        """Represents a race leader for a specific lap range.
+
+        Contains information about which driver led the race
+        and for which laps they were in the lead.
+        """
+
         start_lap: int
         end_lap: int
         car_number: int
         race_id: int
 
     class StageResult(BaseModel):
+        """Represents stage results for a race.
+
+        Contains stage number and results for all drivers
+        in that stage.
+        """
+
         class Result(BaseModel):
+            """Represents a driver's result in a specific stage.
+
+            Contains driver information and stage performance
+            including finishing position and stage points.
+            """
+
             driver_fullname: str
             driver_id: int
             car_number: int
@@ -40,6 +76,13 @@ class WeekendRaceInfo(BaseRaceInfo):
         results: List[Result]
 
     class WeekendResult(BaseModel):
+        """Represents a driver's complete weekend result.
+
+        Contains comprehensive information about a driver's
+        performance including finishing position, points, and
+        other race statistics.
+        """
+
         car_make: str
         car_model: Optional[str] = Field(default=None)
         car_number: int
@@ -80,6 +123,12 @@ class WeekendRaceInfo(BaseRaceInfo):
         winnings: int
 
     class PitReport(BasePitData):
+        """Extended pit data with infraction information.
+
+        Extends BasePitData to include any infractions
+        that occurred during pit stops.
+        """
+
         infraction: Optional[str] = Field(default=None)
 
     stage_4_laps: Optional[int] = Field(default=None)
