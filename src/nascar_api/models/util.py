@@ -4,7 +4,6 @@ This module provides utility functions for data conversion and validation
 used by the NASCAR API models.
 """
 
-import locale
 import re
 from typing import Optional
 
@@ -187,5 +186,4 @@ def comma_str_to_float(input_value: Optional[str]) -> Optional[float]:
     """
     if not input_value:
         return None
-    locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
-    return locale.atof(input_value)
+    return float(input_value.replace(",", ""))
