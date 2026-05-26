@@ -22,21 +22,33 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[project.urls]
+Homepage = "https://github.com/TannerYohe/nascar-api"
+Issues = "https://github.com/TannerYohe/nascar-api/issues"
+
+
 [tool.poetry]
-version = "0.0.0"
+version = "0.1.0"
 
 [tool.poetry.requires-plugins]
 poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.1"
+ruff = "^0.12.7"
+polyfactory = "^2.22.1"
+ty = "^0.0.1a16"
+types-requests = "^2.32.4.20250611"
+requests-mock = "^1.12.1"
+pytest-cov = "^6.2.1"
+python-semantic-release = "^10.2.0"
 
 
 [tool.poetry-dynamic-versioning]
 enable = true
 style = "pep440"
 
-
-[project.urls]
-Homepage = "https://github.com/TannerYohe/nascar-api"
-Issues = "https://github.com/TannerYohe/nascar-api/issues"
 
 [tool.ruff]
 exclude = [".git", "__pycache__", "build", "dist", "site-packages"]
@@ -52,6 +64,7 @@ quote-style = "double"
 indent-style = "space"
 line-ending = "auto"
 
+
 [tool.pytest.ini_options]
 log_cli_level = "DEBUG"
 log_cli = true
@@ -62,18 +75,10 @@ addopts = [
     "--cov-report=html"
 ]
 
+
 [tool.ty.src]
 include = ["src"]
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.4.1"
-ruff = "^0.12.7"
-polyfactory = "^2.22.1"
-ty = "^0.0.1a16"
-types-requests = "^2.32.4.20250611"
-requests-mock = "^1.12.1"
-pytest-cov = "^6.2.1"
-python-semantic-release = "^10.2.0"
 
 [tool.semantic_release]
 version_toml = ["pyproject.toml:tool.poetry.version"]
