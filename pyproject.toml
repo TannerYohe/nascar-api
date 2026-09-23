@@ -29,7 +29,7 @@ Issues = "https://github.com/TannerYohe/nascar-api/issues"
 
 
 [tool.poetry]
-version = "0.1.1"
+version = "0.1.2"
 
 [tool.poetry.requires-plugins]
 poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }

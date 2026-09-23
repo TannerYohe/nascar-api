@@ -1,6 +1,27 @@
 # CHANGELOG
 
 
+## v0.1.2 (2026-09-23)
+
+### Bug Fixes
+
+- Skip lap notes whose FlagState is not a flag
+  ([`ee6173c`](https://github.com/TannerYohe/nascar-api/commit/ee6173cc97dcd208088778dee4cc6bbd0020f559))
+
+lap-notes.json uses FlagState 1000 for broadcast trivia ("Stage 2 has gone caution free in the last
+  4 races here"). It describes no flag, so the Flag enum rejects it, and a single such note made
+  get_lap_notes raise ValidationError for the whole race -- 10 of the first 12 Cup races of 2025.
+
+Notes with an unrecognised FlagState are now skipped and logged at debug level; the rest of the
+  race's notes load as before.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- Skip lap notes whose FlagState is not a flag
+  ([#6](https://github.com/TannerYohe/nascar-api/pull/6),
+  [`aed9a2b`](https://github.com/TannerYohe/nascar-api/commit/aed9a2b200e24538a5cef2310e1216507b9d6770))
+
+
 ## v0.1.1 (2026-05-26)
 
 ### Bug Fixes
