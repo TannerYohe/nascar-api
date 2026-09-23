@@ -1,6 +1,25 @@
 # CHANGELOG
 
 
+## v0.1.3 (2026-09-23)
+
+### Bug Fixes
+
+- Take live points race_id and series_id from the request
+  ([`f4bf2f1`](https://github.com/TannerYohe/nascar-api/commit/f4bf2f11da5111a882aeaf7e5a544b13980fe5fc))
+
+live_points.json sends race_id, run_id, and series_id as 0 on every row, so get_live_points returned
+  standings that claimed race 0 (and, via bad_int_to_series, no series). Both are now taken from the
+  arguments, as get_pit_data already does for race_id. run_id is left as sent: the request does not
+  identify a run.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- Take live points race_id and series_id from the request
+  ([#7](https://github.com/TannerYohe/nascar-api/pull/7),
+  [`3b3bf72`](https://github.com/TannerYohe/nascar-api/commit/3b3bf7214b223c541d66032bac48505840f8ba47))
+
+
 ## v0.1.2 (2026-09-23)
 
 ### Bug Fixes
