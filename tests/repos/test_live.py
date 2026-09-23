@@ -54,6 +54,23 @@ def test_get_live_points_different_series(requests_mock):
     assert all([isinstance(point, PointsData) for point in points])
 
 
+def test_get_live_points_takes_race_and_series_from_request(requests_mock):
+    """The feed zeroes race_id and series_id on every row."""
+    repo = LiveNascarFeedRepo()
+    mock_series = Series.CUP
+    mock_race_id = 5551
+    mock_points = [
+        {**PointsDataFactory.build().model_dump(), "race_id": 0, "series_id": 0, "run_id": 0}
+        for _ in range(3)
+    ]
+    mock_url = f"{repo.DOMAIN}/series_{mock_series.value}/{mock_race_id}/live_points.json"
+    requests_mock.get(mock_url, json=mock_points)
+
+    points = repo.get_live_points(mock_series, mock_race_id)
+    assert all([point.race_id == mock_race_id for point in points])
+    assert all([point.series_id == Series.CUP for point in points])
+
+
 def test_get_live_flags_empty_response(requests_mock):
     repo = LiveNascarFeedRepo()
     mock_url = f"{repo.DOMAIN}/live-flag-data.json"
