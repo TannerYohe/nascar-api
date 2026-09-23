@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import ValidationError
 
-from nascar_api.enums import Series
+from nascar_api.enums import Flag, Series
 from nascar_api.models import (
     LapData,
     PitData,
@@ -78,13 +78,27 @@ class HistoricNascarRepo(NascarRepo):
 
         Returns:
             List of LapData objects containing lap notes and flag information.
+            Notes whose FlagState is not a Flag are skipped: the feed uses
+            FlagState 1000 for broadcast trivia ("Stage 2 has gone caution free
+            in the last 4 races here"), which describes no flag and would
+            otherwise fail validation for the whole race.
 
         """
         url = f"{self.DOMAIN}/{year}/{series.value}/{race_id}/lap-notes.json"
         response_json = self.safe_get(url)
+        known_flags = {flag.value for flag in Flag}
         laps = []
         for lap_number, flag_datas in response_json["laps"].items():
             for flag_data in flag_datas:
+                if flag_data.get("FlagState") not in known_flags:
+                    log.debug(
+                        "Skipping lap %s note %s on race %s: FlagState %s not a Flag",
+                        lap_number,
+                        flag_data.get("NoteID"),
+                        race_id,
+                        flag_data.get("FlagState"),
+                    )
+                    continue
                 laps.append(
                     LapData(
                         race_id=race_id,
