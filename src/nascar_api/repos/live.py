@@ -66,6 +66,9 @@ class LiveNascarFeedRepo(NascarRepo):
 
         Returns:
             List of PointsData objects containing current points standings.
+            The feed sends race_id and series_id as 0 on every row, so both are
+            taken from the arguments instead. run_id is left as sent (also 0):
+            the request does not identify a run.
 
         Raises:
             ValidationError: If the API response contains invalid points data.
@@ -75,5 +78,6 @@ class LiveNascarFeedRepo(NascarRepo):
         response_json = self.safe_get(url)
         points = []
         for data in response_json:
+            data.update({"race_id": race_id, "series_id": series.value})
             points.append(PointsData.model_validate(data))
         return points
